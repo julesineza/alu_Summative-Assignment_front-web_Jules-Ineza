@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Finance Tracker</title>
+    <link rel="stylesheet" href="style-dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div>
+          <a href="index.html">Finance Tracker</a>
+        </div>
+        <div>
+          <a href="index.html">Home</a>
+          <a href="settings.html">Settings</a>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <!-- Button Group -->
+      <div class="button-group">
+        <a href="/records" class="btn btn-primary">
+          <span class="icon-plus">+</span>
+          View All Records
+        </a>
+        <a href="/records?action=add" class="btn btn-secondary">
+          <span class="icon-plus">+</span>
+          Add New Record
+        </a>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stats-card">
+          <h3 class="stats-title">Total Records</h3>
+          <p class="stats-value">[Total Records]</p>
+          <p class="stats-subtitle">Expense entries</p>
+        </div>
+        <div class="stats-card">
+          <h3 class="stats-title">Total Spent</h3>
+          <p class="stats-value">$[Total Spent]</p>
+          <p class="stats-subtitle">[Progress Percent]% of cap</p>
+        </div>
+        <div class="stats-card">
+          <h3 class="stats-title">Remaining</h3>
+          <p class="stats-value">$[Remaining]</p>
+          <p class="stats-subtitle">[Cap Status]</p>
+        </div>
+      </div>
+
+      <!-- Budget Progress & Status -->
+      <div class="budget-status glass">
+        <div class="budget-header">
+          <h2>Budget Status</h2>
+          <span class="status-text">[Status Text]</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: [Progress Percent]%"></div>
+        </div>
+        <div role="status" class="status-message">[Status Message]</div>
+      </div>
+      <div class="top-category glass">
+        <div class="top-category-header">
+          <h2>Top Category</h2>
+        </div>
+        <div class="top-category-content">
+          <div class="top-category-details">
+            <span class="category-name">[Top Category Name]</span>
+            <span class="category-amount">$[Top Category Amount]</span>
+          </div>
+          <p class="category-percentage">
+            [Top Category Percent]% of total spending
+          </p>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggle = document.createElement("button");
+        toggle.className = "navbar-toggle";
+        toggle.innerHTML = "☰";
+        document.querySelector(".navbar").prepend(toggle);
+
+        toggle.addEventListener("click", () => {
+          const menu = document.querySelector(".navbar div:last-child");
+          menu.classList.toggle("active");
+          toggle.innerHTML = menu.classList.contains("active") ? "✕" : "☰";
+        });
+      });
+    </script>
+  </body>
+</html>

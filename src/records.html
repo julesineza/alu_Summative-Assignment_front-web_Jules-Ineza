@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance Tracker</title>
+    <link rel="stylesheet" href="style-records.css" />
+    <link rel="stylesheet" href="modal.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div>
+          <a href="index.html">Expense Records</a>
+        </div>
+        <div>
+          <a href="index.html"><i class="fa-regular fa-house"></i></a>
+          <a href="settings.html"><i class="fa-regular fa-gear"></i></a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section id="search-section">
+        <div id="search-div">
+          <label for="search">Search Records</label>
+          <input
+            type="search"
+            name="search"
+            id="search"
+            placeholder="Search by description"
+          />
+          <p>cascasca</p>
+          <span></span>
+        </div>
+
+        <div class="button-group">
+          <a href="#" class="btn btn-primary open-modal-btn">
+            <span class="icon-plus">+</span>
+            Add New Record
+          </a>
+        </div>
+      </section>
+
+      <section id="table-section">
+        <div id="div-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>05/10/2025</td>
+                <td>Grocery shopping at Whole Foods Market downtown</td>
+                <td>Food</td>
+                <td>$45.75</td>
+                <td>
+                  <div class="action-row">
+                    <i class="fa-solid fa-pen"></i>
+                    <i class="fa-solid fa-trash"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div id="modal-container"></div>
+    </main>
+  </body>
+  <script
+    src="https://kit.fontawesome.com/0f72fb3428.js"
+    crossorigin="anonymous"
+  ></script>
+
+  <script src="script1.js"></script>
+</html>

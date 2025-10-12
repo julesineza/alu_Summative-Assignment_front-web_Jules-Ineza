@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modal</title>
+    <link rel="stylesheet" href="modal.css" />
+  </head>
+  <body>
+    <div id="global-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal-btn">&times;</span>
+        <h2>Add a New Record</h2>
+
+        <form action="#" method="post">
+          <label for="description"
+            >Description <span style="color: red">*</span></label
+          >
+          <input
+            type="text"
+            id="description"
+            name="description"
+            required
+            placeholder="e.g., Groceries"
+          />
+          <p class="hint">Minimum 3 characters</p>
+
+          <label for="amount">Amount <span style="color: red">*</span></label>
+          <input
+            type="text"
+            id="amount"
+            name="amount"
+            required
+            placeholder="0.00"
+          />
+          <p class="hint">Enter a positive number</p>
+
+          <label for="category"
+            >Category <span style="color: red">*</span></label
+          >
+          <select id="category" name="category">
+            <option value="food">Food</option>
+            <option value="book">Book</option>
+            <option value="transport">Transport</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="fees">Fees</option>
+            <option value="other">Other</option>
+          </select>
+
+          <input
+            type="text"
+            id="custom-category"
+            placeholder="Enter custom category"
+            style="display: none"
+          />
+
+          <label for="date">Date <span style="color: red">*</span></label>
+          <input type="date" id="date" name="date" required />
+          <p class="hint">Format: DD-MM-YYYY</p>
+
+          <div class="form-buttons">
+            <button type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script></script>
+  </body>
+</html>

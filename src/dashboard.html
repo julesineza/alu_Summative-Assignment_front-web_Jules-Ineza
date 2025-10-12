@@ -8,6 +8,14 @@
     />
     <title>Finance Tracker</title>
     <link rel="stylesheet" href="style-dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="modal.css" />
   </head>
   <body>
     <header>
@@ -16,24 +24,23 @@
           <a href="index.html">Finance Tracker</a>
         </div>
         <div>
-          <a href="index.html">Home</a>
-          <a href="settings.html">Settings</a>
+          <a href="index.html"><i class="fa-regular fa-house"></i></a>
+          <a href="settings.html"><i class="fa-regular fa-gear"></i></a>
         </div>
       </div>
     </header>
     <main class="container">
       <!-- Button Group -->
       <div class="button-group">
-        <a href="/records" class="btn btn-primary">
+        <a href="records.html" class="btn btn-primary">
           <span class="icon-plus">+</span>
           View All Records
         </a>
-        <a href="/records?action=add" class="btn btn-secondary">
+        <a href="#" class="btn btn-secondary open-modal-btn">
           <span class="icon-plus">+</span>
           Add New Record
         </a>
       </div>
-
       <!-- Stats Grid -->
       <div class="stats-grid">
         <div class="stats-card">
@@ -52,7 +59,6 @@
           <p class="stats-subtitle">[Cap Status]</p>
         </div>
       </div>
-
       <!-- Budget Progress & Status -->
       <div class="budget-status glass">
         <div class="budget-header">
@@ -62,7 +68,9 @@
         <div class="progress-bar">
           <div class="progress-fill" style="width: [Progress Percent]%"></div>
         </div>
-        <div role="status" class="status-message">[Status Message]</div>
+        <div role="status" aria-live="[Aria Live]" class="status-message">
+          [Status Message]
+        </div>
       </div>
       <div class="top-category glass">
         <div class="top-category-header">
@@ -78,22 +86,14 @@
           </p>
         </div>
       </div>
+      <div id="modal-container"></div>
     </main>
     <footer></footer>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const toggle = document.createElement("button");
-        toggle.className = "navbar-toggle";
-        toggle.innerHTML = "☰";
-        document.querySelector(".navbar").prepend(toggle);
-
-        toggle.addEventListener("click", () => {
-          const menu = document.querySelector(".navbar div:last-child");
-          menu.classList.toggle("active");
-          toggle.innerHTML = menu.classList.contains("active") ? "✕" : "☰";
-        });
-      });
-    </script>
+    <script src="script1.js"></script>
+    <script
+      src="https://kit.fontawesome.com/0f72fb3428.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

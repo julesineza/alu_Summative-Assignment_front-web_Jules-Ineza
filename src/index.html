@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finance Tracker</title>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="setup.css" />
   </head>
   <body>
     <main>
@@ -12,7 +20,7 @@
         <div class="content">
           <h1>Welcome to Finance Tracker</h1>
           <p>Track your expenses and manage your student budget easily.</p>
-          <button class="btn" onclick="window.location.href='dashboard.html'">
+          <button class="btn" id="get-started-btn" onclick="showModal()">
             Get Started
           </button>
           <p id="scroll-indicator">Scroll to proceed ↓</p>
@@ -61,10 +69,7 @@
               </p>
             </div>
             <div id="next-butt">
-              <button
-                class="btn"
-                onclick="window.location.href='dashboard.html'"
-              >
+              <button class="btn" id="start-tracking-btn" onclick="showModal()">
                 Start Tracking
               </button>
             </div>
@@ -72,5 +77,90 @@
         </div>
       </section>
     </main>
+    <div id="modal-container">
+      <div id="global-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal-btn">&times;</span>
+          <h2>First use set-up</h2>
+          <span></span>
+          <form>
+            <section>
+              <div>
+                <label for="currency">Base Currency</label>
+                <select id="currency">
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="EUR">EUR - Euro</option>
+                  <option value="GBP">GBP - British Pound</option>
+                  <option value="CAD">CAD - Canadian Dollar</option>
+                </select>
+              </div>
+            </section>
+            <section class="glass">
+              <div class="section-header">
+                <i class="fas fa-chart-line"></i>
+                <h2>Budget Settings</h2>
+              </div>
+
+              <div>
+                <label for="spending-cap">Monthly Spending Cap</label>
+                <input id="spending-cap" type="number" step="10" />
+                <p class="hint-text">
+                  Set a monthly budget limit. You'll receive warnings when
+                  approaching or exceeding this amount.
+                </p>
+              </div>
+            </section>
+            <button class="btn" type="submit">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      const get_started_btn = document.getElementById("get-started-btn");
+      const start_tracking_btn = document.getElementById("start-tracking-btn");
+      const modal = document.getElementById("global-modal");
+      const form = modal.querySelector("form");
+      const closeBtn = document.querySelector(".close-modal-btn");
+
+      function showModal() {
+        const cap = localStorage.getItem("spendingCap");
+        if (cap) {
+          get_started_btn.setAttribute(
+            "onClick",
+            "window.location.href='dashboard.html'"
+          );
+          start_tracking_btn.setAttribute(
+            "onClick",
+            "window.location.href='dashboard.html'"
+          );
+        } else {
+          modal.style.display = "flex";
+        }
+      }
+
+      // Close modal when close button is clicked
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      // Close modal when clicking outside
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const baseCurrency = document.getElementById("currency");
+        const spendingCap = document.getElementById("spending-cap");
+
+        localStorage.setItem("baseCurrency", baseCurrency.value);
+        localStorage.setItem("spendingCap", spendingCap.value);
+
+        window.location.href = "dashboard.html";
+      });
+    </script>
   </body>
 </html>

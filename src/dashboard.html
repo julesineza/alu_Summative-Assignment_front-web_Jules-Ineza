@@ -45,12 +45,12 @@
       <div class="stats-grid">
         <div class="stats-card">
           <h3 class="stats-title">Total Records</h3>
-          <p class="stats-value">[Total Records]</p>
+          <p class="stats-value" id="total_records">[Total Records]</p>
           <p class="stats-subtitle">Expense entries</p>
         </div>
         <div class="stats-card">
           <h3 class="stats-title">Total Spent</h3>
-          <p class="stats-value">$[Total Spent]</p>
+          <p class="stats-value" id="total_spent">$[Total Spent]</p>
           <p class="stats-subtitle">[Progress Percent]% of cap</p>
         </div>
         <div class="stats-card">
@@ -95,5 +95,34 @@
       src="https://kit.fontawesome.com/0f72fb3428.js"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      const total_records = document.querySelector("#total_records");
+      const total_spent = document.querySelector("#total_spent");
+      function loadFromLocalStorage() {
+        const stored = localStorage.getItem("records");
+        records = stored ? JSON.parse(stored) : [];
+        return records;
+      }
+
+      function getTotalRecords() {
+        let records = loadFromLocalStorage();
+        total_records.textContent = records.length || "[records]";
+      }
+
+      function getTotalSpent() {
+        let records = loadFromLocalStorage();
+        let total = 0;
+        for (let record of records) {
+          if (record.amount !== null && record.amount !== undefined) {
+            total = total + record.amount;
+          }
+        }
+        total_spent.textContent = total.toLocaleString("en");
+      }
+
+      getTotalRecords();
+      getTotalSpent();
+    </script>
   </body>
 </html>

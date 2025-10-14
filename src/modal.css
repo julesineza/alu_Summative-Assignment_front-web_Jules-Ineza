@@ -1,6 +1,6 @@
 
 .modal {
-  display: none; /* Hidden by default */
+  display: none; 
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.45);
@@ -24,12 +24,14 @@
   animation: slideUp 0.3s ease;
 }
 
+
 .modal-content h2 {
   font-size: 1.4rem;
   font-weight: 700;
   color: #111827;
   margin-bottom: 1.5rem;
 }
+
 
 .close-modal-btn {
   position: absolute;
@@ -44,7 +46,6 @@
 .close-modal-btn:hover {
   color: #111827;
 }
-
 
 .modal-content form {
   display: flex;
@@ -86,6 +87,7 @@
   margin-top: -0.4rem;
 }
 
+
 .modal-content .form-buttons {
   display: flex;
   gap: 0.8rem;
@@ -119,6 +121,34 @@
 
 .modal-content button.cancel:hover {
   background-color: #e5e7eb;
+}
+
+
+
+.alert {
+  padding: 10px 15px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
 }
 
 /* ===============================

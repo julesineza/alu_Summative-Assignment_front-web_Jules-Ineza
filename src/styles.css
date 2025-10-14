@@ -1,4 +1,4 @@
-/* RESET */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,11 +11,12 @@ html {
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 
 }
 
 
-section {
+main section {
   height: 100vh;
   display: flex;
   align-items: center;

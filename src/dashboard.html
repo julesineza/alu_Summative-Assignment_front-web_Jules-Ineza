@@ -55,23 +55,73 @@
         </div>
         <div class="stats-card">
           <h3 class="stats-title">Remaining</h3>
-          <p class="stats-value">$[Remaining]</p>
-          <p class="stats-subtitle">[Cap Status]</p>
+          <p class="stats-value" id="remaining">$[Remaining]</p>
+          <p class="stats-subtitle" id="subtitle_remainig">[Cap Status]</p>
         </div>
       </div>
       <!-- Budget Progress & Status -->
       <div class="budget-status glass">
         <div class="budget-header">
           <h2>Budget Status</h2>
-          <span class="status-text">[Status Text]</span>
+          <span class="status-text" id="budget-status">[Status Text]</span>
         </div>
         <div class="progress-bar">
           <div class="progress-fill" style="width: [Progress Percent]%"></div>
         </div>
-        <div role="status" aria-live="[Aria Live]" class="status-message">
+        <div
+          role="status"
+          aria-live="[Aria Live]"
+          class="status-message"
+          id="message_progress_bar"
+        >
           [Status Message]
         </div>
       </div>
+
+      <!--Weekly bar chart -->
+      <div class="weekly-chart glass">
+        <div class="chart-header">
+          <h2>Weekly Spending</h2>
+          <span class="chart-subtitle">Last 7 days</span>
+        </div>
+        <div class="chart-bars">
+          <div class="chart-bar-container">
+            <div class="chart-bar" data-day="Mon" data-amount="0"></div>
+            <span class="chart-label">Mon</span>
+          </div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" data-day="Tue" data-amount="0"></div>
+            <span class="chart-label">Tue</span>
+          </div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" data-day="Wed" data-amount="0"></div>
+            <span class="chart-label">Wed</span>
+          </div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" data-day="Thu" data-amount="0"></div>
+            <span class="chart-label">Thu</span>
+          </div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" data-day="Fri" data-amount="0"></div>
+            <span class="chart-label">Fri</span>
+          </div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" data-day="Sat" data-amount="0"></div>
+            <span class="chart-label">Sat</span>
+          </div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" data-day="Sun" data-amount="0"></div>
+            <span class="chart-label">Sun</span>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item">
+            <span class="legend-color" style="background-color: #456882"></span>
+            <span class="legend-text">Daily Spending</span>
+          </div>
+        </div>
+      </div>
+      <!--Top Category Data-->
       <div class="top-category glass">
         <div class="top-category-header">
           <h2>Top Category</h2>
@@ -96,33 +146,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script>
-      const total_records = document.querySelector("#total_records");
-      const total_spent = document.querySelector("#total_spent");
-      function loadFromLocalStorage() {
-        const stored = localStorage.getItem("records");
-        records = stored ? JSON.parse(stored) : [];
-        return records;
-      }
-
-      function getTotalRecords() {
-        let records = loadFromLocalStorage();
-        total_records.textContent = records.length || "[records]";
-      }
-
-      function getTotalSpent() {
-        let records = loadFromLocalStorage();
-        let total = 0;
-        for (let record of records) {
-          if (record.amount !== null && record.amount !== undefined) {
-            total = total + record.amount;
-          }
-        }
-        total_spent.textContent = total.toLocaleString("en");
-      }
-
-      getTotalRecords();
-      getTotalSpent();
-    </script>
+    <script src="dashboard-script.js"></script>
   </body>
 </html>

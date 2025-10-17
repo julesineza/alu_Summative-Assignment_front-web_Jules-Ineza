@@ -113,7 +113,7 @@
         </button>
       </div>
     </main>
-    <script src="script1.js"></script>
+    <script type="module" src="script1.js"></script>
 
     <script>
       const baseCurrency_html = document.querySelector("#currency");
@@ -123,23 +123,59 @@
       const alert_html = document.querySelector(".alert");
 
       const baseCurrency = localStorage.getItem("baseCurrency");
-      const spendingCap = localStorage.getItem("spendigCap");
+      const spendingCap = localStorage.getItem("spendingCap");
 
-      function showAlert(message, type = "success") {
-        // Remove any existing alert
-        const oldAlert = modal.querySelector(".alert");
-        if (oldAlert) oldAlert.remove();
+      // Show/hide confirmation box for clear data
+      function showConfirm() {
+        const confirmBox = document.getElementById("confirmBox");
+        confirmBox.classList.remove("hidden");
+      }
 
-        // Create the alert div
-        const alertDiv = document.createElement("div");
-        alertDiv.className = `alert alert-${type}`;
-        alertDiv.setAttribute("role", "alert");
-        alertDiv.textContent = message;
+      function hideConfirm() {
+        const confirmBox = document.getElementById("confirmBox");
+        confirmBox.classList.add("hidden");
+      }
 
-        // Insert alert before the form
-        modal.querySelector(".modal-content").insertBefore(alertDiv, form);
+      // Normalize and validate imported records to match app schema
+      // Schema per record-script.js: { id, description, amount, category, date }
+      function normalizeRecords(input) {
+        if (!Array.isArray(input)) return [];
+        let counter = 0;
+        return input
+          .filter((r) => r && typeof r === "object")
+          .map((r) => {
+            // Generate id using Date.now() style to match saveRecord() in record-script.js
+            const id = r.id && String(r.id).trim() 
+              ? String(r.id) 
+              : (Date.now() + counter++).toString();
+            const description = (r.description ?? r.title ?? "")
+              .toString()
+              .trim();
+            const amountNum = Number(r.amount);
+            const amount = Number.isFinite(amountNum) ? amountNum : 0;
+            const category = (r.category ?? r.tag ?? "other").toString().trim();
+            const dateStr = r.date
+              ? new Date(r.date).toISOString().slice(0, 10)
+              : new Date().toISOString().slice(0, 10);
+            // Return only the 5 fields used by the app
+            return { id, description, amount, category, date: dateStr };
+          });
+      }
 
-        setTimeout(() => alertDiv.remove(), 3000);
+      function persistSettingsLike(obj) {
+        if (!obj || typeof obj !== "object") return;
+        const knownKeys = ["baseCurrency", "spendingCap", "rateEur", "rateGbp"];
+        for (const k of knownKeys) {
+          if (k in obj) {
+            const val = obj[k];
+            if (val !== undefined && val !== null) {
+              localStorage.setItem(
+                k,
+                typeof val === "string" ? val : JSON.stringify(val)
+              );
+            }
+          }
+        }
       }
 
       function changeSettings() {
@@ -200,18 +236,47 @@
             try {
               const importedData = JSON.parse(e.target.result);
 
-              if (typeof importedData !== "object") {
-                alert("Invalid JSON structure.");
+              if (
+                typeof importedData !== "object" &&
+                !Array.isArray(importedData)
+              ) {
+                alert("Invalid JSON structure. Expecting an object or array.");
                 return;
               }
 
-              // Merge or replace existing localStorage data
-              for (const key in importedData) {
-                localStorage.setItem(key, JSON.stringify(importedData[key]));
+              // Determine records source
+              let incomingRecords = [];
+              if (Array.isArray(importedData)) {
+                incomingRecords = importedData;
+              } else if (Array.isArray(importedData.records)) {
+                incomingRecords = importedData.records;
+              }
+
+              const normalized = normalizeRecords(incomingRecords);
+              if (normalized.length > 0) {
+                // Merge with existing records and deduplicate by id
+                const existing = JSON.parse(localStorage.getItem("records") || "[]");
+                const mapById = new Map();
+                // Add existing records first
+                for (const r of existing) {
+                  mapById.set(String(r.id), r);
+                }
+                // Add/overwrite with imported records
+                for (const r of normalized) {
+                  mapById.set(String(r.id), r);
+                }
+                const merged = Array.from(mapById.values());
+                localStorage.setItem("records", JSON.stringify(merged));
+              }
+
+              // Persist known settings if present on object payload
+              if (!Array.isArray(importedData)) {
+                persistSettingsLike(importedData);
               }
 
               alert("Data imported successfully!");
-              location.reload();
+              // Redirect to dashboard so stats reflect immediately
+              window.location.href = "dashboard.html";
             } catch (err) {
               alert("Failed to import data: " + err.message);
             }
@@ -223,7 +288,7 @@
         input.click();
       }
 
-      // CLEAe DATA
+      // CLEAR DATA
       function clearData() {
         localStorage.clear();
         hideConfirm();

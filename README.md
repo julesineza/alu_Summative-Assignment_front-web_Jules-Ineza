@@ -14,21 +14,21 @@ Default categories: Food, Books, Transport, Entertainment, Fees, Other (editable
 
 ## Project Structure
 
-- `src/index.html` — Landing page + first-use setup modal (currency, spending cap).
-- `src/dashboard.html` — Stats dashboard with progress bar, weekly trend, top category.
-- `src/records.html` — Records table with add/edit modal, sorting, and live regex search.
-- `src/settings.html` — Currency & budget settings; JSON import/export; clear data.
-- CSS: `src/styles.css`, `src/style-dashboard.css`, `src/style-records.css`, `src/style-settings.css`, `src/modal.css`, `src/setup.css`.
-- JS: `src/script1.js` (shared UI + modal loader), `src/dashboard-script.js` (stats, progress, chart), `src/record-script.js` (records, search, sorting, edit/delete).
+- `index.html` — Landing page + first-use setup modal (currency, spending cap).
+- `dashboard.html` — Stats dashboard with progress bar, weekly trend, top category.
+- `records.html` — Records table with add/edit modal, sorting, and live regex search.
+- `settings.html` — Currency & budget settings; JSON import/export; clear data.
+- CSS: `css/styles.css`, `css/style-dashboard.css`, `css/style-records.css`, `css/style-settings.css`, `css/modal.css`, `css/setup.css`.
+- JS: `js/script1.js` (shared UI + modal loader), `js/dashboard-script.js` (stats, progress, chart), `js/record-script.js` (records, search, sorting, edit/delete).
 
 No frameworks; plain HTML/CSS/JS. Font Awesome used for icons.
 
 ## How to Run Locally
 
 1. Clone the repo.
-2. Open `src/index.html` in a modern browser. No build step required.
+2. Open `index.html` in a modern browser. No build step required.
 3. For best results with module scripts, you may use a simple static server (optional):
-   - Python: `python3 -m http.server` then open `http://localhost:8000/src/`
+   - Python: `python3 -m http.server` then open `http://localhost:8000/`
    - VS Code Live Server or any static file server
 
 ## Features Overview (mapped to learning outcomes)
@@ -55,17 +55,17 @@ No frameworks; plain HTML/CSS/JS. Font Awesome used for icons.
 ## Core Pages/Sections
 
 - About (Index)
-  - Purpose and contact in `src/index.html`:
+  - Purpose and contact in `index.html`:
     - GitHub: https://github.com/julesineza/alu_Summative-Assignment_front-web_Jules-Ineza
     - Email: j.ineza@alustudent.com
-- Dashboard/Stats (`src/dashboard.html` + `src/dashboard-script.js`)
+- Dashboard/Stats (`dashboard.html` + `js/dashboard-script.js`)
   - Total records, total spent, remaining vs cap (with color-coded progress bar).
   - ARIA live status message for remaining/overage.
   - Weekly last-7-days trend chart (CSS/JS) and top category.
-- Records (`src/records.html` + `src/record-script.js`)
+- Records (`records.html` + `js/record-script.js`)
   - Table render of all records with sorting and live regex search.
   - Add/Edit form in modal (inline edit via pencil icon), delete with confirm.
-- Settings (`src/settings.html`)
+- Settings (`settings.html`)
   - Base currency + manual EUR/GBP rates.
   - Monthly spending cap.
   - JSON import/export and clear-all with confirmation.
@@ -86,8 +86,8 @@ Each record is stored in `localStorage` under the `records` key as an array of o
 }
 ```
 
-- New records get a unique `id` of the form `rec_XXXX` and a `createdAt` timestamp (`script1.js`).
-- Edits update `updatedAt` in the edit flow (`record-script.js`).
+- New records get a unique `id` of the form `rec_XXXX` and a `createdAt` timestamp (`js/script1.js`).
+- Edits update `updatedAt` in the edit flow (`js/record-script.js`).
 - All changes auto-save to `localStorage`.
 - Settings are also persisted (e.g., `baseCurrency`, `spendingCap`, `rateEur`, `rateGbp`).
 
@@ -98,7 +98,7 @@ Each record is stored in `localStorage` under the `records` key as an array of o
 
 ## Forms & Regex Validation
 
-Validation occurs in the add/edit modal (`script1.js` and `record-script.js`). The following rules are enforced or demonstrated:
+Validation occurs in the add/edit modal (`js/script1.js` and `js/record-script.js`). The following rules are enforced or demonstrated:
 
 - Description/title: forbid leading/trailing spaces and collapse doubles.
   - Suggested pattern: `/^\S(?:.*\S)?$/`
@@ -115,7 +115,7 @@ Error messages are displayed inline near the fields. Invalid submissions are blo
 
 ## Table, Sorting, and Regex Search
 
-- Render: All records are rendered into the table body (`record-script.js` → `loadTable()`). Empty state shown when no records exist.
+- Render: All records are rendered into the table body (`js/record-script.js` → `loadTable()`). Empty state shown when no records exist.
 - Sorting: Click headers to sort by date, description (A↕Z), and amount (↑↓) (`setupSorting()` / `sortTable()`).
 - Live regex search:
   - User types a pattern in the search input (`records.html`).
@@ -166,7 +166,7 @@ Error messages are displayed inline near the fields. Invalid submissions are blo
 
 ## Animations/Transitions (Modal Example)
 
-This app includes tasteful transitions for better UX. The modal uses a subtle backdrop fade and a slide-up content animation, defined in `src/modal.css`:
+This app includes tasteful transitions for better UX. The modal uses a subtle backdrop fade and a slide-up content animation, defined in `css/modal.css`:
 
 ```css
 .modal {

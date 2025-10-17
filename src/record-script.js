@@ -11,12 +11,19 @@ function saveToLocalStorage(records) {
 }
 
 function loadTable() {
+    const tableBody = document.querySelector("table tbody");
+
     let records = loadFromLocalStorage();
+    
+    // If table body doesn't exist, exit early
+    if (!tableBody) {
+        console.error("Table body not found");
+        return;
+    }
 
     // Clear existing rows
-    if (!tableBody){
-        tableBody.innerHTML = '';
-    }
+    tableBody.innerHTML = '';
+ 
     
 
     // If no records, show empty message
@@ -591,10 +598,11 @@ function setupAddRecordButton() {
 }
 
 export function loadRecords() {
+    setTimeout(() => {
     loadTable();
     setupSearch();
     setupSorting();
-    setupAddRecordButton();
+    setupAddRecordButton()},100)
 }
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded',loadRecords)

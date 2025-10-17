@@ -125,6 +125,18 @@
       function showModal() {
         const cap = localStorage.getItem("spendingCap");
         if (cap) {
+          // If settings are already saved, redirect immediately
+          window.location.href = "dashboard.html";
+        } else {
+          // If no settings is set, show the modal
+          modal.style.display = "flex";
+        }
+      }
+
+      // Update button attributes on page load
+      function updateButtonBehavior() {
+        const cap = localStorage.getItem("spendingCap");
+        if (cap) {
           get_started_btn.setAttribute(
             "onClick",
             "window.location.href='dashboard.html'"
@@ -133,17 +145,13 @@
             "onClick",
             "window.location.href='dashboard.html'"
           );
-        } else {
-          modal.style.display = "flex";
         }
       }
 
-      // Close modal when close button is clicked
       closeBtn.addEventListener("click", () => {
         modal.style.display = "none";
       });
 
-      // Close modal when clicking outside
       window.addEventListener("click", (e) => {
         if (e.target === modal) {
           modal.style.display = "none";
@@ -161,6 +169,9 @@
 
         window.location.href = "dashboard.html";
       });
+
+      // Initialize button behavior when page loads
+      updateButtonBehavior();
     </script>
   </body>
 </html>

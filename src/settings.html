@@ -28,7 +28,6 @@
         <div class="section-header">
           <h2>Currency Settings</h2>
         </div>
-        <span id="alert"></span>
 
         <div>
           <label for="currency">Base Currency</label>
@@ -121,21 +120,41 @@
       const rateEur = document.querySelector("#eur-rate");
       const rateGbp = document.querySelector("#gbp-rate");
       const spendingCap_html = document.querySelector("#spending-cap");
-      const alert_html = document.querySelector("#alert");
+      const alert_html = document.querySelector(".alert");
 
       const baseCurrency = localStorage.getItem("baseCurrency");
       const spendingCap = localStorage.getItem("spendigCap");
+
+      function showAlert(message, type = "success") {
+        // Remove any existing alert
+        const oldAlert = modal.querySelector(".alert");
+        if (oldAlert) oldAlert.remove();
+
+        // Create the alert div
+        const alertDiv = document.createElement("div");
+        alertDiv.className = `alert alert-${type}`;
+        alertDiv.setAttribute("role", "alert");
+        alertDiv.textContent = message;
+
+        // Insert alert before the form
+        modal.querySelector(".modal-content").insertBefore(alertDiv, form);
+
+        setTimeout(() => alertDiv.remove(), 3000);
+      }
 
       function changeSettings() {
         localStorage.setItem("baseCurrency", baseCurrency_html.value);
         if (spendingCap_html.value > 0) {
           localStorage.setItem("spendingCap", spendingCap_html.value);
         } else {
-          alert_html.textContent = "Error please enter correct Spending Cap";
-          alert_html.style.color = "red";
+          showAlert(
+            "Error please enter correct Spending Cap",
+            (type = "danger")
+          );
         }
         localStorage.setItem("rateEur", rateEur.value);
         localStorage.setItem("rateGbp", rateGbp.value);
+        showAlert("Success");
       }
 
       //EXPORTING DATA

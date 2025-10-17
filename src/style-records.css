@@ -35,7 +35,7 @@ body {
 
 /* Header and Navbar */
 header {
-  font-size: clamp(1rem, 3vw, 1.2rem); /* Responsive font size */
+  font-size: clamp(1rem, 3vw, 1.2rem); 
   padding: 1rem;
   position: sticky;
   top: 0;
@@ -184,6 +184,12 @@ main {
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 #div-table thead tr{
     background-color: var(--secondary);

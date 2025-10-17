@@ -31,7 +31,7 @@ document.querySelectorAll(".open-modal-btn").forEach(btn => {
       setupGlobalModal();
     }
 
-    // Show modal after loading
+    
     document.getElementById("global-modal").style.display = "flex";
   });
 });

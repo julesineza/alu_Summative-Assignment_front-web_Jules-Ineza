@@ -71,6 +71,34 @@ header {
   color: #1b3c53; 
 }
 
+/* Hamburger menu for mobile */
+.navbar-toggle {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--foreground);
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+  .navbar div:last-child {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+  .navbar div:last-child.active {
+    display: flex;
+  }
+  .navbar-toggle {
+    display: block;
+  }
+}
+
 /* Main Content */
 main {
     max-width: 896px;
@@ -126,7 +154,7 @@ select, input {
     background: var(--input);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
-    color: var(--foreground);
+
     font-size: 1rem;
     margin-top: 0.5rem;
 }

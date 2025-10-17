@@ -12,6 +12,11 @@ const message_progress_bar = document.querySelector("#message_progress_bar")
 const progress_fill = document.querySelector(".progress-fill")
 const weeklyChartBars = document.querySelectorAll('.chart-bar');
 
+
+const currency = localStorage.getItem("baseCurrency")
+
+let records = [];
+
 // load all records currently in the local storage
 function loadFromLocalStorage() {
     const stored = localStorage.getItem("records");
@@ -42,7 +47,7 @@ function getTotalRecords() {
     total_records.textContent = records.length || "0";
     }
 
-    function getTotalSpent() {
+function getTotalSpent() {
     let records = loadFromLocalStorage();
     let total = 0;
     for (let record of records) {
@@ -56,6 +61,7 @@ function getTotalRecords() {
 
 // function to get remainig amount of the spending Cap
 function getRemaining() {
+    let currency = localStorage.getItem("baseCurrency")
     let total = getTotalSpent();
     let spendingCap = localStorage.getItem("spendingCap");
     let amount = spendingCap-total
@@ -64,7 +70,7 @@ function getRemaining() {
     getTrack(cap_status)
 
     remaining_html.textContent =
-        amount.toLocaleString("en") || "[remainig]";
+        amount.toLocaleString("en")+" " + currency || "[remainig]";
 }
 
 // top catory most spent on
@@ -83,7 +89,6 @@ function getTopCategory() {
 
     let topCategory = null;
     let maxCount = 0;
-    console.log(stats)
 
     for (let cat in stats) {
         if (stats[cat].count > maxCount) {
@@ -170,6 +175,8 @@ function progressBar() {
     message_progress_bar.textContent = "You have " + amount.toLocaleString("en") + baseCurrency + " " + "remaining";
 }
 
+
+
 // function to calculate weekly spending
 function getWeeklySpending() {
     let records = loadFromLocalStorage();
@@ -208,7 +215,7 @@ function getDayName(date) {
 function updateWeeklyChart() {
     const weeklyData = getWeeklySpending();
     const amounts = Object.values(weeklyData);
-    const maxAmount = Math.max(...amounts, 1); 
+    const maxAmount = Math.max(...amounts, 1); // Avoid division by zero
     
     weeklyChartBars.forEach(bar => {
         const day = bar.getAttribute('data-day');
@@ -218,20 +225,23 @@ function updateWeeklyChart() {
         // Update bar height
         bar.style.height = Math.max(percentage, 4) + '%'; // Minimum 4% for visibility
         
+        // Update data attribute for tooltip
         const baseCurrency = localStorage.getItem("baseCurrency") || "$";
         bar.setAttribute('data-amount', `${baseCurrency}${amount.toFixed(2)}`);
-         
+        
+        // Update color based on amount (optional gradient effect)
         if (amount > 0) {
             const intensity = Math.min(percentage / 100, 1);
             const blueValue = 100 + Math.floor(155 * intensity);
             bar.style.background = `linear-gradient(to top, ##1B3C53, rgb(96 165 250 / ${0.5 + intensity * 0.5}))`;
         }
     });
-
+    
+    // Optional: Add animation
     animateChartBars();
 }
 
-// Function to animate bars on when page load
+// Function to animate bars on load
 function animateChartBars() {
     weeklyChartBars.forEach((bar, index) => {
         bar.style.transform = 'scaleY(0)';
@@ -245,6 +255,7 @@ function animateChartBars() {
     });
 }
 
+// Add tooltip functionality
 function initChartTooltips() {
     weeklyChartBars.forEach(bar => {
         bar.addEventListener('mouseenter', function() {
@@ -257,11 +268,11 @@ function initChartTooltips() {
     });
 }
 
-
-function initializeDashboard() {
+// Update your initialization function to include the chart
+export function initializeDashboard() {
     getTotalRecords();
     getRemaining();
-    total_spent.textContent = getTotalSpent().toLocaleString("en");
+    total_spent.textContent = getTotalSpent().toLocaleString("en") + " " + currency;
     getTopCategory();
     getStats();
     progressBar();
@@ -269,6 +280,6 @@ function initializeDashboard() {
     initChartTooltips();
 }
 
-// initialization
+// Call the initialization
 initializeDashboard();
 

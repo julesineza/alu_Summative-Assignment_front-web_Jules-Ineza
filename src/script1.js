@@ -1,3 +1,6 @@
+import {initializeDashboard} from './dashboard-script.js'
+import {loadRecords} from './record-script.js'
+
 // logic for the hamburger menu 
 document.addEventListener("DOMContentLoaded", () => {
       const toggle = document.createElement("button");
@@ -63,7 +66,8 @@ function setupGlobalModal() {
   select.addEventListener("change", () => {
     if (select.value === "other") {
       customInput.style.display = "block";
-      customInput.required = true;
+      customInput.required = true; 
+      
     } else {
       customInput.style.display = "none";
       customInput.required = false;
@@ -180,6 +184,8 @@ function setupGlobalModal() {
 
 
     showAlert("Record saved successfully!", "success");
+    initializeDashboard();
+    loadRecords();
 
 
     form.reset();

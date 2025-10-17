@@ -17,7 +17,8 @@
           <a href="#">Settings</a>
         </div>
         <div>
-          <a href="index.html"><i class="fa-regular fa-house"></i></a>
+          <a href="index.html">Home</a>
+          <a href="dashboard.html">Dashboard</a>
         </div>
       </div>
     </header>
@@ -25,9 +26,9 @@
       <!-- Currency Settings -->
       <section class="glass">
         <div class="section-header">
-          <i class="fas fa-dollar-sign"></i>
           <h2>Currency Settings</h2>
         </div>
+        <span id="alert"></span>
 
         <div>
           <label for="currency">Base Currency</label>
@@ -54,7 +55,6 @@
       <!-- Budget Settings -->
       <section class="glass">
         <div class="section-header">
-          <i class="fas fa-chart-line"></i>
           <h2>Budget Settings</h2>
         </div>
 
@@ -109,11 +109,108 @@
 
       <!-- Save Button -->
       <div class="save-container">
-        <button class="btn-primary save-btn" onclick="saveSettings()">
+        <button class="btn-primary save-btn" onclick="changeSettings();">
           Save Settings
         </button>
       </div>
     </main>
     <script src="script1.js"></script>
+
+    <script>
+      const baseCurrency_html = document.querySelector("#currency");
+      const rateEur = document.querySelector("#eur-rate");
+      const rateGbp = document.querySelector("#gbp-rate");
+      const spendingCap_html = document.querySelector("#spending-cap");
+      const alert_html = document.querySelector("#alert");
+
+      const baseCurrency = localStorage.getItem("baseCurrency");
+      const spendingCap = localStorage.getItem("spendigCap");
+
+      function changeSettings() {
+        localStorage.setItem("baseCurrency", baseCurrency_html.value);
+        if (spendingCap_html.value > 0) {
+          localStorage.setItem("spendingCap", spendingCap_html.value);
+        } else {
+          alert_html.textContent = "Error please enter correct Spending Cap";
+          alert_html.style.color = "red";
+        }
+        localStorage.setItem("rateEur", rateEur.value);
+        localStorage.setItem("rateGbp", rateGbp.value);
+      }
+
+      //EXPORTING DATA
+      function exportData() {
+        const data = {};
+
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          const value = localStorage.getItem(key);
+
+          try {
+            data[key] = JSON.parse(value);
+          } catch {
+            data[key] = value;
+          }
+        }
+
+        const json = JSON.stringify(data, null, 2);
+        const blob = new Blob([json], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "finance_data.json";
+        a.click();
+
+        URL.revokeObjectURL(url);
+        alert("Data exported successfully!");
+      }
+
+      // IMPORTING DATA
+      function importData() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "application/json";
+
+        input.onchange = (event) => {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const importedData = JSON.parse(e.target.result);
+
+              if (typeof importedData !== "object") {
+                alert("Invalid JSON structure.");
+                return;
+              }
+
+              // Merge or replace existing localStorage data
+              for (const key in importedData) {
+                localStorage.setItem(key, JSON.stringify(importedData[key]));
+              }
+
+              alert("Data imported successfully!");
+              location.reload();
+            } catch (err) {
+              alert("Failed to import data: " + err.message);
+            }
+          };
+
+          reader.readAsText(file);
+        };
+
+        input.click();
+      }
+
+      // CLEAe DATA
+      function clearData() {
+        localStorage.clear();
+        hideConfirm();
+        alert("All data cleared!");
+        location.reload();
+      }
+    </script>
   </body>
 </html>

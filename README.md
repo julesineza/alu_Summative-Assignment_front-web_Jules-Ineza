@@ -6,11 +6,6 @@ A responsive, accessible, vanilla HTML/CSS/JS web app to track student expenses.
 
 Live demo (GitHub Pages): add your repository Pages URL here once deployed
 
-## Theme
-
-Student Finance Tracker
-
-Default categories: Food, Books, Transport, Entertainment, Fees, Other (editable via “Other” + custom input in the modal).
 
 ## Project Structure
 

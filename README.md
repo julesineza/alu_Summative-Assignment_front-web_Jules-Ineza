@@ -4,7 +4,9 @@
 
 A responsive, accessible, vanilla HTML/CSS/JS web app to track student expenses. It demonstrates semantic structure, mobile-first layouts, DOM manipulation, events, regex validation & search, basic persistence, and clean modular code.
 
-Live demo (GitHub Pages): https://julesineza.github.io/alu_Summative-Assignment_front-web_Jules-Ineza/
+GitHub Pages: https://julesineza.github.io/alu_Summative-Assignment_front-web_Jules-Ineza/
+Live demo video : https://youtu.be/m5ZVs1a8cd0
+
 
 
 ## Project Structure
